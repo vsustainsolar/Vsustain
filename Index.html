@@ -92,6 +92,15 @@
             width: 100%;
         }
 
+        /* Page Container */
+        .page-container {
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -440,6 +449,13 @@
             margin-bottom: 1.5rem;
         }
 
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
         .form-group input,
         .form-group textarea {
             width: 100%;
@@ -479,12 +495,38 @@
             background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             color: white;
             padding: 3rem 5% 1rem;
-            text-align: center;
         }
 
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ff6b35;
         }
 
         .footer-logo {
@@ -494,19 +536,88 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .footer-text {
-            margin-bottom: 2rem;
-            opacity: 0.8;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff6b35, #1e40af);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .copyright {
             border-top: 1px solid #444;
             padding-top: 1rem;
             margin-top: 2rem;
+            text-align: center;
             opacity: 0.6;
+        }
+
+        /* Additional Pages Styling */
+        .page-content {
+            padding: 8rem 5% 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff6b35, #1e40af, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
         }
 
         /* Animations */
@@ -560,6 +671,11 @@
             section {
                 padding: 3rem 5%;
             }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
         }
 
         /* Additional Styling */
@@ -592,241 +708,174 @@
         <nav>
             <div class="logo">V-Sustain</div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#success-stories">Success Stories</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" onclick="showPage('home')">Home</a></li>
+                <li><a href="#about" onclick="showPage('home')">About</a></li>
+                <li><a href="#services" onclick="showPage('home')">Services</a></li>
+                <li><a href="#success-stories" onclick="showPage('home')">Success Stories</a></li>
+                <li><a href="#contact" onclick="showPage('contact')">Contact Us</a></li>
+                <li><a href="#terms" onclick="showPage('terms')">Terms</a></li>
+                <li><a href="#privacy" onclick="showPage('privacy')">Privacy</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero gradient-primary">
-        <div class="floating-element">☀</div>
-        <div class="floating-element">⚡</div>
-        <div class="floating-element">🔋</div>
-        <div class="hero-content">
-            <h1>V-Sustain Solar Solutions</h1>
-            <p class="hero-subtitle">Solar Made Simple. Service Made Personal.</p>
-            <p class="hero-tagline">Towards energy-independent future</p>
-            <p style="margin-bottom: 2rem;">With us, solar isn't just a product—it's a promise of independence, sustainability, and long-term savings.</p>
-            <a href="#contact" class="cta-button">Get Started Today</a>
-        </div>
-    </section>
+    <!-- Home Page -->
+    <div id="home" class="page-container active">
+        <!-- Hero Section -->
+        <section class="hero gradient-primary">
+            <div class="floating-element">☀</div>
+            <div class="floating-element">⚡</div>
+            <div class="floating-element">🔋</div>
+            <div class="hero-content">
+                <h1>V-Sustain Solar Solutions</h1>
+                <p class="hero-subtitle">Solar Made Simple. Service Made Personal.</p>
+                <p class="hero-tagline">Towards energy-independent future</p>
+                <p style="margin-bottom: 2rem;">With us, solar isn't just a product—it's a promise of independence, sustainability, and long-term savings.</p>
+                <a href="#contact" onclick="showPage('contact')" class="cta-button">Get Started Today</a>
+            </div>
+        </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="section-title">About V-Sustain</div>
-        <div class="about-content">
-            <div class="about-text">
-                <h3>Who We Are</h3>
-                <p>V Sustain Solar Solutions is a trusted name in the solar and power backup industry, dedicated to making homes, businesses, and institutions energy-independent and future-ready.</p>
-                <p>We are proud to be an <span class="highlight">Authorized Distributor of Luminous</span>, one of India's most respected brands in solar and power solutions.</p>
-                <div class="achievement-badge">
-                    🏆 India's Second Highest Seller of Higher KVA UPS Systems
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-title">About V-Sustain</div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Who We Are</h3>
+                    <p>V Sustain Solar Solutions is a trusted name in the solar and power backup industry, dedicated to making homes, businesses, and institutions energy-independent and future-ready.</p>
+                    <p>We are proud to be an <span class="highlight">Authorized Distributor of Luminous</span>, one of India's most respected brands in solar and power solutions.</p>
+                    <div class="achievement-badge">
+                        🏆 India's Second Highest Seller of Higher KVA UPS Systems
+                    </div>
+                    <p>This achievement was officially awarded and recognized by none other than cricket legend <span class="highlight">Sachin Tendulkar</span> — a proud moment for the entire V Sustain family.</p>
+                    <p><em>~ Pravesh Kumar, Founder & MD</em></p>
                 </div>
-                <p>This achievement was officially awarded and recognized by none other than cricket legend <span class="highlight">Sachin Tendulkar</span> — a proud moment for the entire V Sustain family.</p>
-                <p><em>~ Pravesh Kumar, Founder & MD</em></p>
-            </div>
-            <div class="vision-mission gradient-tertiary">
-                <h3 style="color: #1e40af;">Vision</h3>
-                <p>To support people in becoming energy-independent through clean and reliable solar solutions.</p>
-                
-                <h3 style="color: #059669; margin-top: 2rem;">Mission</h3>
-                <p>To deliver tailored solar solutions with expert care and to empower communities through sustainable energy.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="section-title">Our Achievements</div>
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">273+</div>
-                <div class="stat-label">Total Installations</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">112+</div>
-                <div class="stat-label">Off-grid Systems</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100+</div>
-                <div class="stat-label">On-grid Systems</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Hybrid Systems</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">150+</div>
-                <div class="stat-label">Commercial Installations</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">123+</div>
-                <div class="stat-label">Residential Installations</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services">
-        <div class="section-title">Our Services</div>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Solar Rooftop Installations</h3>
-                <p>Complete rooftop solar solutions for homes and businesses, designed to maximize energy efficiency and savings.</p>
-            </div>
-            <div class="service-card">
-                <h3>Solar Hybrid & On-Grid Systems</h3>
-                <p>Advanced hybrid and on-grid solar systems that seamlessly integrate with your existing power infrastructure.</p>
-            </div>
-            <div class="service-card">
-                <h3>Off-Grid Solar + Solar UPS</h3>
-                <p>Complete off-grid solutions providing up to 7 days backup power with 2+ years of reliable service.</p>
-            </div>
-            <div class="service-card">
-                <h3>Higher KVA UPS Systems</h3>
-                <p>Industrial and hospital-grade UPS systems for critical power backup requirements.</p>
-            </div>
-            <div class="service-card">
-                <h3>Inverter & Battery Solutions</h3>
-                <p>High-quality inverter and battery systems for uninterrupted power supply in homes and offices.</p>
-            </div>
-            <div class="service-card">
-                <h3>Energy Audit & Custom Design</h3>
-                <p>Professional energy audits and custom-designed solutions tailored to your specific needs.</p>
-            </div>
-            <div class="service-card">
-                <h3>Annual Maintenance & Repairs</h3>
-                <p>Comprehensive maintenance and repair services to ensure optimal system performance.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Success Stories -->
-    <section id="success-stories">
-        <div class="section-title">Success Stories</div>
-        <div class="success-stories">
-            <div class="story-grid">
-                <!-- Story 1: Remote Village -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Off-Grid Solar</div>
-                        <h3>Powering Through the Storm</h3>
-                        <p>Remote Village near Mudigere, Karnataka</p>
-                    </div>
-                    <div class="story-content">
-                        <p>This remote village battled frequent, long outages—crippling education, communication, and everyday life. We stepped in with a reliable power solution that didn't just light up homes—it lit up possibilities.</p>
-                        <p><em>"Everyone deserves a shot."</em></p>
-                    </div>
-                </div>
-
-                <!-- Story 2: Samsung Store -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Commercial UPS</div>
-                        <h3>Powering Retail Excellence</h3>
-                        <p>Samsung Experience Store, Malleshwaram & Koramangala, Bengaluru</p>
-                    </div>
-                    <div class="story-content">
-                        <p>Started with a 2.5 kVA setup for Malleshwaram store. Delivered high-efficiency Luminous UPS systems, perfectly matched to store's power demands. Impressed, the client referred us for a 3 kVA installation at Samsung Koramangala branch.</p>
-                        <p><strong>Systems:</strong> 2.5 - 3 kVA Uninterrupted Power Backup</p>
-                    </div>
-                </div>
-
-                <!-- Story 3: L&T Apartment -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Roof-top Solar</div>
-                        <h3>Tailored with Care</h3>
-                        <p>L&T Raintree Boulevard, Hebbal, Bengaluru</p>
-                    </div>
-                    <div class="story-content">
-                        <p>The client needed a rooftop solar system that was smartly engineered to fit their building's architecture and energy needs. We delivered a tailor-made setup that ticks all the boxes: performance, safety, and full compliance with apartment regulations.</p>
-                        <p><em>"Clean energy, done right."</em></p>
-                    </div>
-                </div>
-
-                <!-- Story 4: Karnataka House -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Off-Grid Solar</div>
-                        <h3>Best-suited for the needs</h3>
-                        <p>Independent House, Karnataka</p>
-                    </div>
-                    <div class="story-content">
-                        <p>The client was lost in choices — on-grid, hybrid, off-grid — unsure what fit their needs and budget. We cut through the noise, assessed requirements, and delivered the perfect-fit solution.</p>
-                        <p><strong>System:</strong> 4.4 kW (8 × 550 W Panels) + 7 kVA with 8 Batteries</p>
-                        <p><em>"No guesswork. Just clarity and confidence."</em></p>
-                    </div>
-                </div>
-
-                <!-- Story 5: La Pino'z Pizza -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Food Industry</div>
-                        <h3>Serving Slices, Powered Right</h3>
-                        <p>La Pino'z Pizza, Bengaluru</p>
-                    </div>
-                    <div class="story-content">
-                        <p>Power cuts don't send a heads-up — but La Pino'z wasn't about to let that disrupt their flow. They needed to safeguard kitchen gear and POS systems from unexpected outages.</p>
-                        <p><strong>Solution:</strong> 4 kVA UPS Installation</p>
-                        <p><em>"Now, the ovens stay hot, systems stay sharp, and orders don't stop."</em></p>
-                    </div>
-                </div>
-
-                <!-- Story 6: Prestige Tranquility -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Residential Solar</div>
-                        <h3>Prestige Powered</h3>
-                        <p>Prestige Tranquility, Bengaluru</p>
-                    </div>
-                    <div class="story-content">
-                        <p>Prestige Tranquility sought a cost-efficient and sustainable energy solution to contribute to a greener future for the community. We delivered a sustainable energy solution that balanced efficiency with long-term savings.</p>
-                        <p><em>"Greener Goals. Smarter Power."</em></p>
-                    </div>
-                </div>
-
-                <!-- Story 7: Mahalakshmi Glass -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-badge">Industrial UPS</div>
-                        <h3>Powering Business at Scale</h3>
-                        <p>Mahalakshmi Glass Plywood & Hardware, Channasandra, Bengaluru</p>
-                    </div>
-                    <div class="story-content">
-                        <p>Delivered and installed a 10 kVA high-capacity UPS system to support extensive business operations.</p>
-                        <p><strong>Our biggest installation to date—powered with quality.</strong></p>
-                        <p><strong>System:</strong> 10 kVA - Stay powered, always</p>
-                    </div>
+                <div class="vision-mission gradient-tertiary">
+                    <h3 style="color: #1e40af;">Vision</h3>
+                    <p>To support people in becoming energy-independent through clean and reliable solar solutions.</p>
+                    
+                    <h3 style="color: #059669; margin-top: 2rem;">Mission</h3>
+                    <p>To deliver tailored solar solutions with expert care and to empower communities through sustainable energy.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Why Choose Us -->
-    <section>
-        <div class="section-title">Why Choose V-Sustain?</div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">👨‍🔧</div>
-                <h3>Certified Technicians</h3>
-                <p>Our experienced and certified technicians ensure quality installation and service.</p>
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="section-title">Our Achievements</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">273+</div>
+                    <div class="stat-label">Total Installations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">112+</div>
+                    <div class="stat-label">Off-grid Systems</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">On-grid Systems</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Hybrid Systems</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Commercial Installations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">123+</div>
+                    <div class="stat-label">Residential Installations</div>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>High-Quality Technology</h3>
-                <p>We use only the best solar technology and equipment for maximum efficiency.</p>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <div class="section-title">Our Services</div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Solar Rooftop Installations</h3>
+                    <p>Complete rooftop solar solutions for homes and businesses, designed to maximize energy efficiency and savings.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Solar Hybrid & On-Grid Systems</h3>
+                    <p>Advanced hybrid and on-grid solar systems that seamlessly integrate with your existing power infrastructure.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Off-Grid Solar + Solar UPS</h3>
+                    <p>Complete off-grid solutions providing up to 7 days backup power with 2+ years of reliable service.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Higher KVA UPS Systems</h3>
+                    <p>Industrial and hospital-grade UPS systems for critical power backup requirements.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Inverter & Battery Solutions</h3>
+                    <p>High-quality inverter and battery systems for uninterrupted power supply in homes and offices.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Energy Audit & Custom Design</h3>
+                    <p>Professional energy audits and custom-designed solutions tailored to your specific needs.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Annual Maintenance & Repairs</h3>
+                    <p>Comprehensive maintenance and repair services to ensure optimal system performance.</p>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Customized Systems</h3>
-                <p>Every system is tailored to meet your specific energy needs and requirements.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
-                <h3>Affordable Pricing</h3>
-                <p>Competitive pricing with end-to-end guidance throughout your solar journey.</p>
+        </section>
+
+        <!-- Success Stories -->
+        <section id="success-stories">
+            <div class="section-title">Success Stories</div>
+            <div class="success-stories">
+                <div class="story-grid">
+                    <!-- Story 1: Remote Village -->
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-badge">Off-Grid Solar</div>
+                            <h3>Powering Through the Storm</h3>
+                            <p>Remote Village near Mudigere, Karnataka</p>
+                        </div>
+                        <div class="story-content">
+                            <p>This remote village battled frequent, long outages—crippling education, communication, and everyday life. We stepped in with a reliable power solution that didn't just light up homes—it lit up possibilities.</p>
+                            <p><em>"Everyone deserves a shot."</em></p>
+                        </div>
+                    </div>
+
+                    <!-- Story 2: Samsung Store -->
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-badge">Commercial UPS</div>
+                            <h3>Powering Retail Excellence</h3>
+                            <p>Samsung Experience Store, Malleshwaram & Koramangala, Bengaluru</p>
+                        </div>
+                        <div class="story-content">
+                            <p>Started with a 2.5 kVA setup for Malleshwaram store. Delivered high-efficiency Luminous UPS systems, perfectly matched to store's power demands. Impressed, the client referred us for a 3 kVA installation at Samsung Koramangala branch.</p>
+                            <p><strong>Systems:</strong> 2.5 - 3 kVA Uninterrupted Power Backup</p>
+                        </div>
+                    </div>
+
+                    <!-- Story 3: L&T Apartment -->
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-badge">Roof-top Solar</div>
+                            <h3>Tailored with Care</h3>
+                            <p>L&T Raintree Boulevard, Hebbal, Bengaluru</p>
+                        </div>
+                        <div class="story-content">
+                            <p>The client needed a rooftop solar system that was smartly engineered to fit their building's architecture and energy needs. We delivered a tailor-made setup that ticks all the boxes: performance, safety, and full compliance with apartment regulations.</p>
+                            <p><em>"Clean energy, done right."</em></p>
+                        </div>
+                    </div>
+
+                    <!-- Story 4: Karnataka House -->
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-badge">Off-Grid Solar</div>
+                            <h3>Best-suited for the needs</h3>
+                            <p>Independent House, Karnataka</p>
+                        </div>
+                        <div class="story-content">
+                            <p>The client was lost in choices — on-grid, hybrid, off-grid — unsure what fit their needs and budget. We cut through the noise, assessed requirements, and delivered the perfect-fit solution.</p>
+                            <p><strong>System:</strong> 4.4 kW (8 × 550
