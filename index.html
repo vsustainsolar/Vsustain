@@ -1,1318 +1,544 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V-Sustain Solar Solutions - Solar Made Simple, Service Made Personal</title>
+    <title>V-Sustain Solar Solutions | Solar Made Simple</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#F59E0B', // Solar Amber
+                            green: '#10B981', // Eco Green
+                            dark: '#1F2937',  // Slate Dark
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
-
-        /* Gradient Backgrounds */
-        .gradient-primary {
-            background: linear-gradient(135deg, #ff6b35 0%, #1e40af 50%, #059669 100%);
+        ::-webkit-scrollbar-thumb {
+            background: #F59E0B;
+            border-radius: 5px;
         }
-
-        .gradient-secondary {
-            background: linear-gradient(45deg, #059669 0%, #1e40af 50%, #ff6b35 100%);
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
         }
-
-        .gradient-tertiary {
-            background: linear-gradient(90deg, rgba(255,107,53,0.1) 0%, rgba(30,64,175,0.1) 50%, rgba(5,150,105,0.1) 100%);
+        
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1rem;
         }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        @media (min-width: 640px) {
+            .masonry-grid { column-count: 2; }
         }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 3; }
         }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35, #1e40af, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #ff6b35;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #ff6b35, #1e40af);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #ff6b35 0%, #1e40af 50%, #059669 100%);
-            opacity: 0.9;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
-        }
-
-        .hero-tagline {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.9s forwards;
-        }
-
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        /* Sections */
-        section {
-            padding: 5rem 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ff6b35, #1e40af, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about-text h3 {
-            color: #ff6b35;
+        .masonry-item {
+            break-inside: avoid;
             margin-bottom: 1rem;
         }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .vision-mission {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .achievement-badge {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            color: white;
-            border-radius: 50px;
-            font-weight: bold;
-            margin: 1rem 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Services Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b35, #1e40af, #059669);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .service-card h3 {
-            color: #1e40af;
-            margin-bottom: 1rem;
-        }
-
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(30,64,175,0.1) 50%, rgba(5,150,105,0.1) 100%);
-            padding: 4rem 5%;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #059669;
-            font-weight: bold;
-            margin-top: 0.5rem;
-        }
-
-        /* Success Stories */
-        .success-stories {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .story-grid {
-            display: grid;
-            gap: 3rem;
-        }
-
-        .story-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .story-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .story-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, #ff6b35, #1e40af, #059669);
-            color: white;
-        }
-
-        .story-content {
-            padding: 2rem;
-        }
-
-        .story-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Why Choose Us */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .contact-info {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin-right: 1rem;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e5e5;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            color: white;
-            padding: 4rem 5% 1rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            color: #ff6b35;
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35, #1e40af, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        .footer-description {
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
-            line-height: 1.6;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            opacity: 0.8;
-        }
-
-        .footer-links a:hover {
-            color: #ff6b35;
-            opacity: 1;
-        }
-
-        .contact-details {
-            list-style: none;
-        }
-
-        .contact-details li {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .contact-details li strong {
-            color: #ff6b35;
-            min-width: 80px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ff6b35, #1e40af);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #444;
-            padding-top: 2rem;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .copyright {
-            opacity: 0.7;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-legal a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .footer-legal a:hover {
-            color: #ff6b35;
-            opacity: 1;
-        }
-
-        /* Page Styles for Terms and Privacy */
-        .page-header {
-            background: linear-gradient(135deg, #ff6b35 0%, #1e40af 50%, #059669 100%);
-            color: white;
-            padding: 8rem 5% 3rem;
-            text-align: center;
-        }
-
-        .page-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-            line-height: 1.8;
-        }
-
-        .page-content h2 {
-            color: #1e40af;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .page-content h3 {
-            color: #ff6b35;
-            margin-top: 1.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .page-content ul {
-            margin-left: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .page-content li {
-            margin-bottom: 0.5rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 3rem 5%;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-legal {
-                justify-content: center;
-            }
-        }
-
-        /* Additional Styling */
-        .highlight {
-            color: #ff6b35;
-            font-weight: bold;
-        }
-
-        .btn-secondary {
-            display: inline-block;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #059669, #1e40af);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        
+        /* Carousel Transitions */
+        .carousel-slide {
+            transition: opacity 1.5s ease-in-out;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">V-Sustain</div>
-            <ul class="nav-links">
-                <li><a href="#home" onclick="showPage('home')">Home</a></li>
-                <li><a href="#about" onclick="showPage('home')">About</a></li>
-                <li><a href="#services" onclick="showPage('home')">Services</a></li>
-                <li><a href="#success-stories" onclick="showPage('home')">Success Stories</a></li>
-                <li><a href="enquiry.html" onclick="showPage('home')">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="font-sans text-gray-800 bg-gray-50">
 
-    <!-- Main Home Page -->
-    <div id="home" class="page">
-        <!-- Hero Section -->
-        <section class="hero gradient-primary">
-            <div class="floating-element">☀</div>
-            <div class="floating-element">⚡</div>
-            <div class="floating-element">🔋</div>
-            <div class="hero-content">
-                <h1>V-Sustain Solar Solutions</h1>
-                <p class="hero-subtitle">Solar Made Simple. Service Made Personal.</p>
-                <p class="hero-tagline">Towards energy-independent future</p>
-                <p style="margin-bottom: 2rem;">With us, solar isn't just a product—it's a promise of independence, sustainability, and long-term savings.</p>
-                <a href="enquiry.html" class="cta-button">Get Started Today</a>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about">
-            <div class="section-title">About V-Sustain</div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Who We Are</h3>
-                    <p>V Sustain Solar Solutions is a trusted name in the solar and power backup industry, dedicated to making homes, businesses, and institutions energy-independent and future-ready.</p>
-                    <p>We are proud to be an <span class="highlight">Authorized Distributor of Luminous</span>, one of India's most respected brands in solar and power solutions.</p>
-                    <div class="achievement-badge">
-                        🏆 India's Second Highest Seller of Higher KVA UPS Systems
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img class="h-16 w-auto" src="https://github.com/vsustainsolar/Images/raw/279a38cb05eb65abd2bafce6bd124bb9720f31ce/logo%20v%20sustain.png" alt="V-Sustain Logo">
+                    <div class="ml-3 hidden sm:block">
+                        <h1 class="text-xl font-bold text-gray-900 leading-none">V-Sustain</h1>
+                        <p class="text-xs text-brand-yellow font-semibold tracking-wider">SOLAR SOLUTIONS</p>
                     </div>
-                    <p>This achievement was officially awarded and recognized by none other than cricket legend <span class="highlight">Sachin Tendulkar</span> — a proud moment for the entire V Sustain family.</p>
-                    <p><em>~ Pravesh Kumar, Founder & MD</em></p>
                 </div>
-                <div class="vision-mission gradient-tertiary">
-                    <h3 style="color: #1e40af;">Vision</h3>
-                    <p>To support people in becoming energy-independent through clean and reliable solar solutions.</p>
-                    
-                    <h3 style="color: #059669; margin-top: 2rem;">Mission</h3>
-                    <p>To deliver tailored solar solutions with expert care and to empower communities through sustainable energy.</p>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-600 hover:text-brand-yellow transition font-medium">Home</a>
+                    <a href="#about" class="text-gray-600 hover:text-brand-yellow transition font-medium">About</a>
+                    <a href="#services" class="text-gray-600 hover:text-brand-yellow transition font-medium">Services</a>
+                    <a href="#gallery" class="text-gray-600 hover:text-brand-yellow transition font-medium">Gallery</a>
+                    <a href="#reviews" class="text-gray-600 hover:text-brand-yellow transition font-medium">Reviews</a>
+                    <a href="https://wa.me/919900108067?text=Hi,%20I%20saw%20your%20website.%20I%20need%20more%20information" target="_blank" class="bg-brand-yellow text-white px-5 py-2.5 rounded-full hover:bg-yellow-600 transition font-bold shadow-lg shadow-yellow-500/30 flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> Get Quote
+                    </a>
+                </div>
+
+                <!-- Mobile Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand-yellow focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
                 </div>
             </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats">
-            <div class="section-title">Our Achievements</div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">273+</div>
-                    <div class="stat-label">Total Installations</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">112+</div>
-                    <div class="stat-label">Off-grid Systems</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">On-grid Systems</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Hybrid Systems</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">150+</div>
-                    <div class="stat-label">Commercial Installations</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">123+</div>
-                    <div class="stat-label">Residential Installations</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services">
-            <div class="section-title">Our Services</div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Solar Rooftop Installations</h3>
-                    <p>Complete rooftop solar solutions for homes and businesses, designed to maximize energy efficiency and savings.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Solar Hybrid & On-Grid Systems</h3>
-                    <p>Advanced hybrid and on-grid solar systems that seamlessly integrate with your existing power infrastructure.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Off-Grid Solar + Solar UPS</h3>
-                    <p>Complete off-grid solutions providing up to 7 days backup power with 2+ years of reliable service.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Higher KVA UPS Systems</h3>
-                    <p>Industrial and hospital-grade UPS systems for critical power backup requirements.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Inverter & Battery Solutions</h3>
-                    <p>High-quality inverter and battery systems for uninterrupted power supply in homes and offices.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Energy Audit & Custom Design</h3>
-                    <p>Professional energy audits and custom-designed solutions tailored to your specific needs.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Annual Maintenance & Repairs</h3>
-                    <p>Comprehensive maintenance and repair services to ensure optimal system performance.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Success Stories -->
-        <section id="success-stories">
-            <div class="section-title">Success Stories</div>
-            <div class="success-stories">
-                <div class="story-grid">
-                    <!-- Story 1: Remote Village -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Off-Grid Solar</div>
-                            <h3>Powering Through the Storm</h3>
-                            <p>Remote Village near Mudigere, Karnataka</p>
-                        </div>
-                        <div class="story-content">
-                            <p>This remote village battled frequent, long outages—crippling education, communication, and everyday life. We stepped in with a reliable power solution that didn't just light up homes—it lit up possibilities.</p>
-                            <p><em>"Everyone deserves a shot."</em></p>
-                        </div>
-                    </div>
-
-                    <!-- Story 2: Samsung Store -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Commercial UPS</div>
-                            <h3>Powering Retail Excellence</h3>
-                            <p>Samsung Experience Store, Malleshwaram & Koramangala, Bengaluru</p>
-                        </div>
-                        <div class="story-content">
-                            <p>Started with a 2.5 kVA setup for Malleshwaram store. Delivered high-efficiency Luminous UPS systems, perfectly matched to store's power demands. Impressed, the client referred us for a 3 kVA installation at Samsung Koramangala branch.</p>
-                            <p><strong>Systems:</strong> 2.5 - 3 kVA Uninterrupted Power Backup</p>
-                        </div>
-                    </div>
-
-                    <!-- Story 3: L&T Apartment -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Roof-top Solar</div>
-                            <h3>Tailored with Care</h3>
-                            <p>L&T Raintree Boulevard, Hebbal, Bengaluru</p>
-                        </div>
-                        <div class="story-content">
-                            <p>The client needed a rooftop solar system that was smartly engineered to fit their building's architecture and energy needs. We delivered a tailor-made setup that ticks all the boxes: performance, safety, and full compliance with apartment regulations.</p>
-                            <p><em>"Clean energy, done right."</em></p>
-                        </div>
-                    </div>
-
-                    <!-- Story 4: Karnataka House -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Off-Grid Solar</div>
-                            <h3>Best-suited for the needs</h3>
-                            <p>Independent House, Karnataka</p>
-                        </div>
-                        <div class="story-content">
-                            <p>The client was lost in choices — on-grid, hybrid, off-grid — unsure what fit their needs and budget. We cut through the noise, assessed requirements, and delivered the perfect-fit solution.</p>
-                            <p><strong>System:</strong> 4.4 kW (8 × 550 W Panels) + 7 kVA with 8 Batteries</p>
-                            <p><em>"No guesswork. Just clarity and confidence."</em></p>
-                        </div>
-                    </div>
-
-                    <!-- Story 5: La Pino'z Pizza -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Food Industry</div>
-                            <h3>Serving Slices, Powered Right</h3>
-                            <p>La Pino'z Pizza, Bengaluru</p>
-                        </div>
-                        <div class="story-content">
-                            <p>Power cuts don't send a heads-up — but La Pino'z wasn't about to let that disrupt their flow. They needed to safeguard kitchen gear and POS systems from unexpected outages.</p>
-                            <p><strong>Solution:</strong> 4 kVA UPS Installation</p>
-                            <p><em>"Now, the ovens stay hot, systems stay sharp, and orders don't stop."</em></p>
-                        </div>
-                    </div>
-
-                    <!-- Story 6: Prestige Tranquility -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Residential Solar</div>
-                            <h3>Prestige Powered</h3>
-                            <p>Prestige Tranquility, Bengaluru</p>
-                        </div>
-                        <div class="story-content">
-                            <p>Prestige Tranquility sought a cost-efficient and sustainable energy solution to contribute to a greener future for the community. We delivered a sustainable energy solution that balanced efficiency with long-term savings.</p>
-                            <p><em>"Greener Goals. Smarter Power."</em></p>
-                        </div>
-                    </div>
-
-                    <!-- Story 7: Mahalakshmi Glass -->
-                    <div class="story-card">
-                        <div class="story-header">
-                            <div class="story-badge">Industrial UPS</div>
-                            <h3>Powering Business at Scale</h3>
-                            <p>Mahalakshmi Glass Plywood & Hardware, Channasandra, Bengaluru</p>
-                        </div>
-                        <div class="story-content">
-                            <p>Delivered and installed a 10 kVA high-capacity UPS system to support extensive business operations.</p>
-                            <p><strong>Our biggest installation to date—powered with quality.</strong></p>
-                            <p><strong>System:</strong> 10 kVA - Stay powered, always</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Choose Us -->
-        <section>
-            <div class="section-title">Why Choose V-Sustain?</div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👨‍🔧</div>
-                    <h3>Certified Technicians</h3>
-                    <p>Our experienced and certified technicians ensure quality installation and service.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>High-Quality Technology</h3>
-                    <p>We use only the best solar technology and equipment for maximum efficiency.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Customized Systems</h3>
-                    <p>Every system is tailored to meet your specific energy needs and requirements.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Affordable Pricing</h3>
-                    <p>Competitive pricing with end-to-end guidance throughout your solar journey.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Us Section -->
-        <section id="contact-us">
-            <div class="section-title">Contact Us</div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3 style="color: #ff6b35; margin-bottom: 1.5rem;">Get in Touch</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <strong>Address:</strong><br>
-                            NO.33/1, 6th main, Kanteerava Studio Peenya Main Road<br>
-                            Nandini Layout, Bengaluru<br>
-                            Bengaluru Urban, Karnataka - 560096
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div>
-                            <strong>Phone:</strong><br>
-                            +91 99000 00476
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉</div>
-                        <div>
-                            <strong>Email:</strong><br>
-                            info@vsustain.co
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🕐</div>
-                        <div>
-                            <strong>Working Hours:</strong><br>
-                            Mon - Sat: 9:00 AM - 6:00 PM<br>
-                            Sunday: Closed
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3 style="color: #1e40af; margin-bottom: 1.5rem;">Send us a Message</h3>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="Your Phone">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Subject">
-                        </div>
-                        <div class="form-group">
-                            <textarea rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Terms and Conditions Page -->
-    <div id="terms" class="page hidden">
-        <div class="page-header">
-            <h1>Terms and Conditions</h1>
-            <p>Last updated: December 2025</p>
         </div>
-        <div class="page-content">
-            <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using the services of V-Sustain Solar Solutions, you accept and agree to be bound by the terms and provision of this agreement.</p>
 
-            <h2>2. Services Provided</h2>
-            <p>V-Sustain Solar Solutions provides:</p>
-            <ul>
-                <li>Solar panel installation and maintenance</li>
-                <li>Power backup solutions</li>
-                <li>UPS systems installation</li>
-                <li>Energy consultation services</li>
-                <li>Annual maintenance contracts</li>
-            </ul>
-
-            <h2>3. Payment Terms</h2>
-            <p>Payment terms will be specified in individual service agreements. Generally:</p>
-            <ul>
-                <li>Advance payment may be required for equipment procurement</li>
-                <li>Final payment is due upon satisfactory completion of installation</li>
-                <li>Late payment charges may apply as per agreement</li>
-            </ul>
-
-            <h2>4. Warranty and Guarantee</h2>
-            <p>We provide comprehensive warranty coverage:</p>
-            <ul>
-                <li>Solar panels: As per manufacturer warranty (typically 20-25 years)</li>
-                <li>Inverters and batteries: As per manufacturer specifications</li>
-                <li>Installation workmanship: 2 years from completion</li>
-                <li>Annual maintenance contracts available</li>
-            </ul>
-
-            <h2>5. Limitation of Liability</h2>
-            <p>V-Sustain Solar Solutions shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
-
-            <h2>6. Force Majeure</h2>
-            <p>We shall not be held responsible for delays or failures in performance resulting from acts beyond our reasonable control, including but not limited to natural disasters, government actions, or supply chain disruptions.</p>
-
-            <h2>7. Modifications to Terms</h2>
-            <p>V-Sustain Solar Solutions reserves the right to modify these terms at any time. Continued use of our services after such modifications constitutes acceptance of the updated terms.</p>
-
-            <h2>8. Governing Law</h2>
-            <p>These terms shall be interpreted and governed in accordance with the laws of India, and any disputes shall be subject to the jurisdiction of courts in Bengaluru, Karnataka.</p>
-
-            <h2>9. Contact Information</h2>
-            <p>For any questions regarding these terms and conditions, please contact us at:</p>
-            <p>
-                <strong>V-Sustain Solar Solutions</strong><br>
-                NO.33/1, 6th main, Kanteerava Studio Peenya Main Road<br>
-                Nandini Layout, Bengaluru, Karnataka - 560096<br>
-                Email: info@vsustain.co<br>
-                Phone: +91 99000 00476
-            </p>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-yellow hover:bg-gray-50 rounded-md">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-yellow hover:bg-gray-50 rounded-md">About</a>
+                <a href="#services" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-yellow hover:bg-gray-50 rounded-md">Services</a>
+                <a href="#gallery" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-yellow hover:bg-gray-50 rounded-md">Gallery</a>
+                <a href="#reviews" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-yellow hover:bg-gray-50 rounded-md">Reviews</a>
+                <a href="https://wa.me/919900108067?text=Hi,%20I%20saw%20your%20website.%20I%20need%20more%20information" target="_blank" class="block px-3 py-2 text-base font-bold text-brand-yellow hover:bg-gray-50 rounded-md">Contact Us (WhatsApp)</a>
+            </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- Privacy Policy Page -->
-    <div id="privacy" class="page hidden">
-        <div class="page-header">
-            <h1>Privacy Policy</h1>
-            <p>Last updated: December 2025</p>
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-20 h-screen min-h-[600px] flex items-center">
+        <!-- Carousel Background -->
+        <div class="absolute inset-0 z-0 overflow-hidden bg-gray-900" id="hero-carousel">
+            <!-- Image 1 -->
+            <img class="carousel-slide absolute inset-0 w-full h-full object-cover opacity-100" 
+                 src="https://github.com/vsustainsolar/Images/raw/279a38cb05eb65abd2bafce6bd124bb9720f31ce/WhatsApp%20Image%202026-02-08%20at%201.03.20%20PM.jpeg" 
+                 alt="Solar Installation 1">
+            <!-- Image 2 -->
+            <img class="carousel-slide absolute inset-0 w-full h-full object-cover opacity-0" 
+                 src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture1.png" 
+                 alt="Solar Installation 2">
+            <!-- Image 3 -->
+            <img class="carousel-slide absolute inset-0 w-full h-full object-cover opacity-0" 
+                 src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture4.png" 
+                 alt="Solar Installation 3">
+             <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/30 z-10"></div>
         </div>
-        <div class="page-content">
-            <h2>1. Information We Collect</h2>
-            <p>We collect information you provide directly to us, such as:</p>
-            <ul>
-                <li>Contact information (name, email, phone number, address)</li>
-                <li>Property details for solar assessments</li>
-                <li>Energy consumption patterns</li>
-                <li>Payment and billing information</li>
-                <li>Communication preferences</li>
-            </ul>
 
-            <h2>2. How We Use Your Information</h2>
-            <p>We use the information we collect to:</p>
-            <ul>
-                <li>Provide and maintain our services</li>
-                <li>Process transactions and send related information</li>
-                <li>Send technical notices and support messages</li>
-                <li>Respond to your comments and questions</li>
-                <li>Develop new services and improve existing ones</li>
-                <li>Comply with legal obligations</li>
-            </ul>
-
-            <h2>3. Information Sharing</h2>
-            <p>We do not sell, trade, or otherwise transfer your personal information to third parties except:</p>
-            <ul>
-                <li>With your explicit consent</li>
-                <li>To our trusted service partners who assist in operations</li>
-                <li>To comply with legal requirements</li>
-                <li>To protect our rights and safety</li>
-            </ul>
-
-            <h2>4. Data Security</h2>
-            <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
-
-            <h2>5. Data Retention</h2>
-            <p>We retain your personal information for as long as necessary to provide our services and fulfill the purposes outlined in this privacy policy, unless a longer retention period is required by law.</p>
-
-            <h2>6. Your Rights</h2>
-            <p>You have the right to:</p>
-            <ul>
-                <li>Access and update your personal information</li>
-                <li>Request deletion of your personal data</li>
-                <li>Object to processing of your personal information</li>
-                <li>Request data portability</li>
-                <li>Withdraw consent at any time</li>
-            </ul>
-
-            <h2>7. Cookies and Tracking</h2>
-            <p>Our website may use cookies and similar tracking technologies to enhance user experience. You can control cookie settings through your browser preferences.</p>
-
-            <h2>8. Third-Party Links</h2>
-            <p>Our website may contain links to third-party sites. We are not responsible for the privacy practices of such other sites. We encourage you to read their privacy policies.</p>
-
-            <h2>9. Changes to Privacy Policy</h2>
-            <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the "last updated" date.</p>
-
-            <h2>10. Contact Us</h2>
-            <p>If you have any questions about this privacy policy, please contact us at:</p>
-            <p>
-                <strong>V-Sustain Solar Solutions</strong><br>
-                NO.33/1, 6th main, Kanteerava Studio Peenya Main Road<br>
-                Nandini Layout, Bengaluru, Karnataka - 560096<br>
-                Email: info@vsustain.co<br>
-                Phone: +91 99000 00476
-            </p>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 w-full">
+            <div class="lg:w-2/3">
+                <span class="inline-block py-1 px-3 rounded bg-brand-green/20 text-brand-green font-bold text-sm mb-4 border border-brand-green/30 backdrop-blur-sm">Powering the Future</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-lg">
+                    Solar Made Simple. <br>
+                    <span class="text-brand-yellow">Service Made Personal.</span>
+                </h1>
+                <p class="text-xl text-gray-200 mb-8 max-w-2xl drop-shadow-md">
+                    From residential rooftops to industrial power backups. We help you become energy-independent with Luminous authorized solutions.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/919900108067?text=Hi,%20I%20saw%20your%20website.%20I%20need%20more%20information" target="_blank" class="px-8 py-4 bg-brand-yellow hover:bg-yellow-600 text-white font-bold rounded-lg text-center transition shadow-lg flex items-center justify-center gap-2">
+                        <i data-lucide="sun" class="w-5 h-5"></i> Free Consultation
+                    </a>
+                    <a href="#services" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-lg text-center transition flex items-center justify-center gap-2">
+                        Explore Services <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-content">
-                <!-- Company Info -->
-                <div class="footer-section">
-                    <div class="footer-logo">V-Sustain</div>
-                    <p class="footer-description">
-                        Leading solar solutions provider in Karnataka. We specialize in making homes and businesses energy-independent through innovative solar technology and exceptional service.
+    <!-- Stats Section -->
+    <section class="bg-brand-yellow py-10 relative -mt-4 z-20 mx-4 lg:mx-12 rounded-xl shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+            <div>
+                <div class="text-4xl font-bold mb-1">273+</div>
+                <div class="text-sm opacity-90 font-medium">Total Installations</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-1">112+</div>
+                <div class="text-sm opacity-90 font-medium">Off-Grid Systems</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-1">150+</div>
+                <div class="text-sm opacity-90 font-medium">Commercial Projects</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-1">4.9/5</div>
+                <div class="text-sm opacity-90 font-medium">Customer Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Image Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture2.png" alt="Installation" class="rounded-xl shadow-lg w-full h-64 object-cover mt-8">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture4.png" alt="Panels" class="rounded-xl shadow-lg w-full h-64 object-cover">
+                </div>
+
+                <!-- Content -->
+                <div>
+                    <h2 class="text-brand-yellow font-bold uppercase tracking-wide text-sm mb-2">About V-Sustain</h2>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Empowering Communities Through Sustainable Energy</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Founded by <strong>Mr. Pravesh Kumar Tiwari</strong>, V-Sustain Solar Solutions is a trusted name in the solar and power backup industry. We are dedicated to making homes, businesses, and institutions energy-independent.
                     </p>
-                    <div class="social-links">
-                        <a href="#" title="Facebook">📘</a>
-                        <a href="#" title="Instagram">📷</a>
-                        <a href="#" title="LinkedIn">💼</a>
-                        <a href="#" title="Twitter">🐦</a>
-                        <a href="#" title="YouTube">📺</a>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Recognized as "India’s Second Highest Seller of Higher KVA UPS Systems" by cricket legend Sachin Tendulkar, we bring authorized Luminous expertise to your doorstep.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-brand-yellow/10 p-2 rounded-lg mt-1">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-brand-yellow"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Vision</h4>
+                                <p class="text-sm text-gray-600">To support people in becoming energy-independent through clean and reliable solar solutions.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-brand-green/10 p-2 rounded-lg mt-1">
+                                <i data-lucide="hammer" class="w-5 h-5 text-brand-green"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Mission</h4>
+                                <p class="text-sm text-gray-600">To deliver tailored solar solutions with expert care and empower communities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900">Our Services</h2>
+                <p class="mt-4 text-gray-600">End-to-end guidance from system selection to installation and maintenance.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-brand-yellow group">
+                    <div class="w-14 h-14 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-yellow transition">
+                        <i data-lucide="zap" class="w-7 h-7 text-brand-yellow group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Solar Solutions</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-yellow"></i> Rooftop Installations</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-yellow"></i> Hybrid & On-Grid Systems</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-yellow"></i> Off-Grid & Solar UPS</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-brand-green group">
+                    <div class="w-14 h-14 bg-brand-green/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-green transition">
+                        <i data-lucide="battery-charging" class="w-7 h-7 text-brand-green group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Power Backup & UPS</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-green"></i> Higher KVA UPS Systems</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-green"></i> Industrial Inverters</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-brand-green"></i> Flat Plate & Tubular Batteries</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-gray-600 group">
+                    <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gray-600 transition">
+                        <i data-lucide="wrench" class="w-7 h-7 text-gray-600 group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Consulting & AMC</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-gray-400"></i> Energy Audit & Custom Design</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-gray-400"></i> Annual Maintenance (AMC)</li>
+                        <li class="flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2 text-gray-400"></i> Repairs & After-sales Support</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Products Note -->
+            <div class="mt-12 p-6 bg-white rounded-xl shadow border border-gray-100 flex flex-col md:flex-row items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-lg">Authorized Luminous Distributor</h4>
+                    <p class="text-sm text-gray-500">Deals in Zelio, Eco Volt+, Cruze+, NXT+ PCU, Regalia Series and more.</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Luminous_Power_Technologies_Logo.jpg/800px-Luminous_Power_Technologies_Logo.jpg" alt="Luminous" class="h-10 opacity-80">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Highlights (Case Studies) -->
+    <section class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-12 border-l-4 border-brand-yellow pl-4">Proven Success Stories</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="font-bold text-brand-yellow mb-2">Remote Village</h3>
+                    <p class="text-xs text-gray-400 mb-3">Mudigere, Karnataka</p>
+                    <p class="text-sm text-gray-300">Enabled "possibilities" for a community with frequent outages by installing independent Off-Grid Solar + Solar UPS solutions.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="font-bold text-brand-yellow mb-2">Samsung Experience Stores</h3>
+                    <p class="text-xs text-gray-400 mb-3">Bengaluru</p>
+                    <p class="text-sm text-gray-300">Ensured retail excellence with High-Efficiency Luminous UPS systems (2.5 & 3 KVA) in Malleshwaram & Koramangala.</p>
+                </div>
+                 <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="font-bold text-brand-yellow mb-2">Independent House</h3>
+                    <p class="text-xs text-gray-400 mb-3">Off-Grid Installation</p>
+                    <p class="text-sm text-gray-300">Installed 4.4 kW panels with 7 kVA Inverter and 8 batteries, solving the "maze of choices" for the homeowner.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="font-bold text-brand-yellow mb-2">La Pino’z Pizza</h3>
+                    <p class="text-xs text-gray-400 mb-3">F&B Industry</p>
+                    <p class="text-sm text-gray-300">Rock-solid 4 kVA UPS to keep ovens hot and POS systems sharp during power cuts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Collage) -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Installation Gallery</h2>
+                <p class="text-gray-600 mt-2">A glimpse into our workmanship and projects.</p>
+            </div>
+
+            <div class="masonry-grid">
+                <!-- Image 1 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture5.png" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                <!-- Image 2 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture6.png" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                <!-- Image 3 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Picture7.png" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                <!-- Image 4 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/279a38cb05eb65abd2bafce6bd124bb9720f31ce/WhatsApp%20Image%202026-02-08%20at%201.03.20%20PM.jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                <!-- Image 5 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%2012.15.39%20PM%20(1).jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                <!-- Image 6 -->
+                <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%2012.15.39%20PM.jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                 <!-- Image 7 -->
+                 <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%2012.15.40%20PM.jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                 <!-- Image 8 -->
+                 <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%205.08.38%20PM.jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                 <!-- Image 9 -->
+                 <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%205.09.34%20PM%20(1).jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+                 <!-- Image 10 -->
+                 <div class="masonry-item relative group overflow-hidden rounded-xl">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/WhatsApp%20Image%202026-02-08%20at%205.09.34%20PM.jpeg" alt="Installation" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-brand-yellow/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">What Customers Say</h2>
+                <div class="flex justify-center items-center mt-3 text-yellow-500 space-x-1">
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <span class="text-gray-600 font-semibold ml-2 text-lg">4.9/5</span>
+                </div>
+                <div class="mt-4">
+                     <a href="https://g.page/r/CYSddG1t_OG1EBE/review" target="_blank" class="text-sm font-semibold text-blue-600 hover:underline flex items-center justify-center gap-1">
+                        Review us on Google <i data-lucide="external-link" class="w-3 h-3"></i>
+                     </a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review Screenshot 1 -->
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Screenshot%202026-02-10%20025901.png" alt="Customer Review 1" class="w-full h-auto rounded">
+                    <div class="mt-4 flex items-center gap-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-5 h-5">
+                        <span class="text-xs font-bold text-gray-500">Verified Google Business Profile Review</span>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home" onclick="showPage('home')">Home</a></li>
-                        <li><a href="#about" onclick="showPage('home')">About Us</a></li>
-                        <li><a href="#services" onclick="showPage('home')">Our Services</a></li>
-                        <li><a href="#success-stories" onclick="showPage('home')">Success Stories</a></li>
-                        <li><a href="enquiry.html" onclick="showPage('home')">Contact Us</a></li>
-                        <li><a href="#" onclick="showPage('terms')">Terms & Conditions</a></li>
-                        <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
-                    </ul>
+                <!-- Review Screenshot 2 -->
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Screenshot%202026-02-10%20025931.png" alt="Customer Review 2" class="w-full h-auto rounded">
+                    <div class="mt-4 flex items-center gap-2">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-5 h-5">
+                        <span class="text-xs font-bold text-gray-500">Verified Google Business Profile Review</span>
+                    </div>
                 </div>
 
-                <!-- Services -->
-                <div class="footer-section">
-                    <h3>Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="#services" onclick="showPage('home')">Solar Rooftop Installation</a></li>
-                        <li><a href="#services" onclick="showPage('home')">Hybrid & On-Grid Systems</a></li>
-                        <li><a href="#services" onclick="showPage('home')">Off-Grid Solar Solutions</a></li>
-                        <li><a href="#services" onclick="showPage('home')">UPS Systems</a></li>
-                        <li><a href="#services" onclick="showPage('home')">Energy Audit</a></li>
-                        <li><a href="#services" onclick="showPage('home')">Maintenance & Repairs</a></li>
-                    </ul>
+                <!-- Review Screenshot 3 -->
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition">
+                    <img src="https://github.com/vsustainsolar/Images/raw/390754b8f56f05cc64c664d814e89984c88e4ef1/Screenshot%202026-02-10%20030022.png" alt="Customer Review 3" class="w-full h-auto rounded">
+                    <div class="mt-4 flex items-center gap-2">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-5 h-5">
+                        <span class="text-xs font-bold text-gray-500">Verified Google Business Profile Review</span>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Contact & Footer -->
+    <section id="contact" class="bg-brand-dark text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 mb-16">
+                
                 <!-- Contact Info -->
-                <div class="footer-section">
-                    <h3>Contact Information</h3>
-                    <ul class="contact-details">
-                        <li>
-                            <strong>Address:</strong>
-                            6th main, Kanteerava Studio, Peenya Main Road, Nandini Layout, Bengaluru, Karnataka - 560096
+                <div>
+                    <h2 class="text-3xl font-bold mb-8">Get In Touch</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-brand-yellow mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-lg">Primary Office</h4>
+                                <p class="text-gray-400">No. 33/1, 6th Main, Kanteerava Studio Peenya Main Road, Nandini Layout, Bengaluru, Karnataka - 560096</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="store" class="w-6 h-6 text-brand-yellow mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-lg">Showroom</h4>
+                                <p class="text-gray-400">No. 243/b, Kencham Arcade, Behind Sony Center, 1st N Block, Rajajinagar 1st Block, Bangalore - 560010</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="phone" class="w-6 h-6 text-brand-yellow mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-lg">Phone</h4>
+                                <p class="text-gray-400"><a href="tel:+919900108067" class="hover:text-brand-yellow transition">+91 9900108067</a> (Primary)</p>
+                                <p class="text-gray-500 text-sm mt-1">+91 99-000-00476 (Secondary)</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start">
+                            <i data-lucide="mail" class="w-6 h-6 text-brand-yellow mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-lg">Email</h4>
+                                <p class="text-gray-400">admin@vsustain.co<br>vsustainsolarsolutions@gmail.com<br>info@vsustain.co</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hours & Policies -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-8">Operating Hours</h2>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span>Mon - Sat</span>
+                            <span>09:00 AM – 06:00 PM</span>
                         </li>
-                        <li>
-                            <strong>Phone:</strong>
-                            +919900000476
-                        </li>
-                        <li>
-                            <strong>Email:</strong>
-                            vsutainsolarsolutions@gmail.com
-                        </li>
-                        <li>
-                            <strong>Hours:</strong>
-                            Mon-Sat: 9:00 AM - 8:00 PM
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span>Sunday</span>
+                            <span class="text-red-400">Closed</span>
                         </li>
                     </ul>
+
+                    <div class="mt-10 bg-gray-800 p-6 rounded-xl">
+                        <h3 class="text-brand-yellow font-bold mb-2">Our Promise</h3>
+                        <p class="text-sm text-gray-300 mb-2"><strong>Warranty:</strong> 20-25 years on Panels, 2 years Workmanship.</p>
+                        <p class="text-sm text-gray-300"><strong>GSTIN:</strong> 29AJRPT3690B1ZO</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <div class="copyright">
-                    Copyright © 2025 V-Sustain Solar Solutions. All rights reserved.
-                </div>
-                <div class="footer-legal">
-                    <a href="#" onclick="showPage('terms')">Terms & Conditions</a>
-                    <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">© 2026 V-Sustain Solar Solutions. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0 items-center">
+                    <a href="https://www.facebook.com/profile.php?id=61585559551582" target="_blank" class="text-gray-500 hover:text-blue-500 transition"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                    <a href="https://www.instagram.com/vsustainsolarsolutions/" target="_blank" class="text-gray-500 hover:text-pink-500 transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                    <a href="https://www.youtube.com/@SustainableTiwari" target="_blank" class="text-gray-500 hover:text-red-500 transition"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                     <a href="https://g.page/r/CYSddG1t_OG1EBE/review" target="_blank" class="text-gray-500 hover:text-white transition flex items-center gap-1 text-xs uppercase font-bold border border-gray-600 px-2 py-1 rounded">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G" class="w-3 h-3 grayscale opacity-70"> Review
+                     </a>
                 </div>
             </div>
         </div>
-    </footer>
+    </section>
 
+    <!-- Scripts -->
     <script>
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.add('hidden');
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
             });
+        });
+
+        // Simple Carousel Script
+        const slides = document.querySelectorAll('.carousel-slide');
+        let currentSlide = 0;
+        const slideInterval = 4000; // Change every 4 seconds
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('opacity-100');
+            slides[currentSlide].classList.add('opacity-0');
             
-            // Show selected page
-            document.getElementById(pageId).classList.remove('hidden');
+            currentSlide = (currentSlide + 1) % slides.length;
             
-            // Scroll to top
-            window.scrollTo(0, 0);
+            slides[currentSlide].classList.remove('opacity-0');
+            slides[currentSlide].classList.add('opacity-100');
         }
 
-        // Contact form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target && !this.getAttribute('onclick')) {
-                    e.preventDefault();
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
+        setInterval(nextSlide, slideInterval);
     </script>
 </body>
 </html>
